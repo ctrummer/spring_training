@@ -1,17 +1,16 @@
 package com.training.spring.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.Public, force = true)
+@NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
 @Entity
 public class Ingredient {
 

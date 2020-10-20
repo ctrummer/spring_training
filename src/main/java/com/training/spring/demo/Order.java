@@ -5,24 +5,20 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name="Taco_Order")
-// @RequiredArgsConstructor
-// @NoArgsConstructor(access = AccessLevel.PRIVATE ,force=true)
 public class Order {
   
   @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   
   private Date placedAt;
