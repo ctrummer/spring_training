@@ -1,13 +1,16 @@
 package com.training.spring.demo.data;
 
 import com.training.spring.demo.Ingredient;
+import org.springframework.data.repository.CrudRepository;
 
-public interface IngredientRepository {
+import java.util.Optional;
 
-  Iterable<Ingredient> findAll();
-  
-  Ingredient findById(String id);
-  
+public interface IngredientRepository extends CrudRepository<Ingredient, String>  {
+
+  // Iterable<Ingredient> findAll();
+
+  // Ingredient findById(String id);
+
   Ingredient save(Ingredient ingredient);
-  
+
 }
