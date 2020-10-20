@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +66,8 @@ public class DesignTacoController {
     return new Order();
   }
   
-  @ModelAttribute(name = "taco")
-  public Taco taco() {
+  @ModelAttribute(name = "design")
+  public Taco design() {
     return new Taco();
   }
 

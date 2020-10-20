@@ -3,23 +3,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
-//tag::newFields[]
 @Data
+@Entity
+@Table(name="Taco_Order")
 public class Order {
   
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   
   private Date placedAt;
-  
-//end::newFields[]
 
   @NotBlank(message="Delivery name is required")
   private String deliveryName;
@@ -46,19 +48,16 @@ public class Order {
   @Digits(integer=3, fraction=0, message="Invalid CVV")
   private String ccCVV;
 
+  @ManyToMany
   private List<Taco> tacos = new ArrayList<>();
   
   public void addDesign(Taco design) {
     this.tacos.add(design);
   }
-  
-  /*
-// tag::newFields[]
-  ...
 
-// end::newFields[]
-   */
-//tag::newFields[]
+  @PrePersist
+  void placedAt() {
+    this.placedAt = new Date();
+  }
 }
-//end::newFields[]
 
