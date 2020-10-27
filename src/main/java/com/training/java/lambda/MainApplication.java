@@ -8,11 +8,12 @@ import static java.text.Collator.*;
 
 public class MainApplication {
     public static void main(String[] args) {
-        System.out.println("Hello world....");
+        String helloWorldStr = "Hello world....";
+        System.out.println(helloWorldStr);
 
         String[] words = {"M", "\nSkyfall", "Q", "\t\tAdele\t"};
 //        Arrays.sort(words, Collator.getInstance());
-        Arrays.sort(words, (String s1, String s2) -> { return s1.trim().compareTo(s2.trim()); });
+        Arrays.sort(words, Comparator.comparing(String::trim));
         System.out.println(Arrays.toString(words));
 
     }
