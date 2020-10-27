@@ -1,7 +1,5 @@
 package com.training.spring.demo.security;
 
-import org.springframework.stereotype.Component;
-
 import javax.activation.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +13,7 @@ public class TacoDataSource implements DataSource {
     public InputStream getInputStream() {
         return null;
     }
+
 
     @Override
     public OutputStream getOutputStream() throws IOException {
