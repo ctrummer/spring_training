@@ -100,8 +100,8 @@ public class DesignTacoControllerTest {
     mockMvc.perform(post("/design")
         .content("name=Test+Taco&ingredients=FLTO,GRBF,CHED")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(header().stringValues("Location", "/orders/current"));
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(header().stringValues("Location", ""));
   }
 
 }
