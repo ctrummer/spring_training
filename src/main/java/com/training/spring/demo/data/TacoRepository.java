@@ -1,11 +1,9 @@
 package com.training.spring.demo.data;
 
+import com.training.spring.demo.Taco;
 import org.springframework.data.repository.CrudRepository;
 
-import com.training.spring.demo.Taco;
+public interface TacoRepository
+        extends CrudRepository<Taco, Long> {
 
-public interface TacoRepository extends CrudRepository<Taco, Long> {
-/*
-  Taco save(Taco design);
-  */
 }

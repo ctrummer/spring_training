@@ -1,126 +1,86 @@
+//tag::securityConfigOuterClass[]
 package com.training.spring.demo.security;
 
-
-import com.training.spring.demo.Taco;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-import javax.activation.DataSource;
-
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web
-        .configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web
-        .configuration.WebSecurityConfigurerAdapter;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation
-        .authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web
-        .builders.HttpSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
+//end::securityConfigOuterClass[]
+//tag::baseBonesImports[]
+//end::baseBonesImports[]
 
+//tag::securityConfigOuterClass[]
 
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-   /* @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user1").password("user1").authorities("ROLE_USER").
-                and().withUser("user2").password("user2").authorities("ROLE_USER");
-    }*/
-
- /*   @Autowired
-    TacoDataSource dataSource;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource((javax.sql.DataSource) dataSource);
-    }*/
-
-   // using DataSource (autowired) in SecurityConfig.configure leads to following queries in Spring
-   public static final String DEF_USERS_BY_USERNAME_QUERY =
-            "select username,password,enabled " +
-                    "from users " +
-                    "where username = ?";
-
-    public static final String DEF_AUTHORITIES_BY_USERNAME_QUERY =
-        "select username,authority " +
-                "from authorities " +
-                "where username = ?";
-
-    public static final String DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY =
-            "select g.id, g.group_name, ga.authority " +
-                    "from groups g, group_members gm, group_authorities ga " +
-                    "where gm.username = ? " +
-                    "and g.id = ga.group_id " +
-                    "and g.id = gm.group_id";
-
-
-
-//tag::securityConfigOuterClass[]
-
-
 //end::securityConfigOuterClass[]
 
-        //tag::customUserDetailsService[]
-        @Autowired
-        private UserDetailsService userDetailsService;
+  //tag::customUserDetailsService[]
+  @Autowired
+  private UserDetailsService userDetailsService;
 
 //end::customUserDetailsService[]
 
-        //tag::configureHttpSecurity[]
-        //tag::authorizeRequests[]
-        //tag::customLoginPage[]
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .authorizeRequests()
-                    .antMatchers("/design", "/orders")
-                    .access("hasRole('ROLE_USER')")
-                    .antMatchers("/", "/**").access("permitAll")
-                    //end::authorizeRequests[]
+  //tag::configureHttpSecurity[]
+  //tag::authorizeRequests[]
+  //tag::customLoginPage[]
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+/*
+    http
+            .authorizeRequests()
+            .antMatchers("/design", "/orders")
+            .hasRole("ROLE_USER")
+            .antMatchers("/”, "/**").permitAll();
+*/
 
-                    .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    //end::customLoginPage[]
+    http
+            .authorizeRequests()
+            .antMatchers("/design", "/orders")
+            .access("hasRole('ROLE_USER')")
+            .antMatchers("/", "/**").access("permitAll")
+            //end::authorizeRequests[]
 
-                    // tag::enableLogout[]
-                    .and()
-                    .logout()
-                    .logoutSuccessUrl("/")
-                    // end::enableLogout[]
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            //end::customLoginPage[]
 
-                    // Make H2-Console non-secured; for debug purposes
-                    // tag::csrfIgnore[]
-                    .and()
-                    .csrf()
-                    .ignoringAntMatchers("/h2-console/**")
-                    // end::csrfIgnore[]
+            // tag::enableLogout[]
+            .and()
+            .logout()
+            .logoutSuccessUrl("/")
+            // end::enableLogout[]
 
-                    // Allow pages to be loaded in frames from the same origin; needed for H2-Console
-                    // tag::frameOptionsSameOrigin[]
-                    .and()
-                    .headers()
-                    .frameOptions()
-                    .sameOrigin()
-            // end::frameOptionsSameOrigin[]
+            // Make H2-Console non-secured; for debug purposes
+            // tag::csrfIgnore[]
+            .and()
+            .csrf()
+            .ignoringAntMatchers("/h2-console/**")
+            // end::csrfIgnore[]
 
-            //tag::authorizeRequests[]
-            //tag::customLoginPage[]
-            ;
-        }
+            // Allow pages to be loaded in frames from the same origin; needed for H2-Console
+            // tag::frameOptionsSameOrigin[]
+            .and()
+            .headers()
+            .frameOptions()
+            .sameOrigin()
+    // end::frameOptionsSameOrigin[]
+
+    //tag::authorizeRequests[]
+    //tag::customLoginPage[]
+    ;
+  }
 //end::configureHttpSecurity[]
 //end::authorizeRequests[]
 //end::customLoginPage[]
@@ -133,29 +93,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     auth
       .userDetailsService(userDetailsService);
-
+    
   }
   //end::customUserDetailsService[]
-
+  
    */
 
-        //tag::customUserDetailsService_withPasswordEncoder[]
-        @Bean
-        public PasswordEncoder encoder() {
-            return new StandardPasswordEncoder("53cr3t");
-        }
+  //tag::customUserDetailsService_withPasswordEncoder[]
+  @Bean
+  public PasswordEncoder encoder() {
+    return new StandardPasswordEncoder("53cr3t");
+  }
 
 
-        @Override
-        protected void configure(AuthenticationManagerBuilder auth)
-                throws Exception {
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth)
+          throws Exception {
 
-            auth
-                    .userDetailsService(userDetailsService)
-                    .passwordEncoder(encoder());
+    auth
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(encoder());
 
-        }
-        //end::customUserDetailsService_withPasswordEncoder[]
+  }
+  //end::customUserDetailsService_withPasswordEncoder[]
 
 //
 // IN MEMORY AUTHENTICATION EXAMPLE
@@ -165,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
-
+    
     auth
       .inMemoryAuthentication()
         .withUser("buzz")
@@ -175,7 +135,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .withUser("woody")
           .password("bullseye")
           .authorities("ROLE_USER");
-
+    
   }
 //end::configureAuthentication_inMemory[]
 */
@@ -187,15 +147,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //tag::configureAuthentication_jdbc[]
   @Autowired
   DataSource dataSource;
-
+  
   @Override
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
-
+    
     auth
       .jdbcAuthentication()
         .dataSource(dataSource);
-
+    
   }
 //end::configureAuthentication_jdbc[]
 */
@@ -205,7 +165,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
-
+    
     auth
       .jdbcAuthentication()
         .dataSource(dataSource)
@@ -215,7 +175,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authoritiesByUsernameQuery(
             "select username, authority from UserAuthorities " +
             "where username=?");
-
+    
   }
 //end::configureAuthentication_jdbc_withQueries[]
 */
@@ -225,7 +185,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
-
+    
     auth
       .jdbcAuthentication()
         .dataSource(dataSource)
@@ -236,7 +196,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "select username, authority from UserAuthorities " +
             "where username=?")
         .passwordEncoder(new StandardPasswordEncoder("53cr3t");
-
+    
   }
 //end::configureAuthentication_jdbc_passwordEncoder[]
 */
@@ -260,5 +220,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //tag::securityConfigOuterClass[]
 
-    }
+}
 //end::securityConfigOuterClass[]

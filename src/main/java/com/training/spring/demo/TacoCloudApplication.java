@@ -1,14 +1,11 @@
 package com.training.spring.demo;
 
+import com.training.spring.demo.Ingredient.Type;
+import com.training.spring.demo.data.IngredientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import com.training.spring.demo.data.IngredientRepository;
-import com.training.spring.demo.Ingredient.Type;
-
-
 
 @SpringBootApplication
 public class TacoCloudApplication {
